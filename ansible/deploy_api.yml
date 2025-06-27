@@ -1,0 +1,7 @@
+# ansible/hosts.yml
+all:
+  hosts:
+    api_server:
+      ansible_host: 54.86.129.40  # SUBSTITUA PELO IP PÚBLICO DA SUA EC2!
+      ansible_user: ubuntu                 # Usuário padrão para AMIs Ubuntu
+      ansible_ssh_private_key_file: ~/.ssh/api-estoque-key # Caminho para sua chave privada SSH
