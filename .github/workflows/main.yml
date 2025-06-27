@@ -1,0 +1,31 @@
+# .github/workflows/main.yml
+name: CI da API de Estoque
+
+on:
+  push:
+    branches:
+      - main # O pipeline será acionado a cada push na branch 'main'
+  pull_request:
+    branches:
+      - main # O pipeline também será acionado para Pull Requests na branch 'main'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest # O ambiente onde o job será executado (uma máquina virtual Ubuntu)
+
+    steps:
+    - name: Checkout do Código # Etapa 1: Checkout do código-fonte do repositório
+      uses: actions/checkout@v4
+
+    - name: Configurar Node.js # Etapa 2: Configuração do ambiente Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18' # Use a versão do Node.js que você está usando localmente ou uma LTS
+
+    - name: Instalar Dependências # Etapa 3: Instalação das dependências do projeto
+      run: npm install
+      working-directory: ./ # Garante que npm install seja executado na raiz do repositório
+
+    - name: Executar Testes Unitários # Etapa 4: Execução dos testes unitários
+      run: npm test # Executa o script 'test' definido no seu package.json
+      working-directory: ./ # Garante que npm test seja executado na raiz do repositório

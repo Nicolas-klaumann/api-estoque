@@ -3,14 +3,14 @@ const request = require('supertest');
 const app = require('../app'); // Importa o app que foi exportado
 
 describe('API de Gestão de Estoque', () => {
-    // Teste 1: Verificar se a rota /status retorna status 200 e mensagem correta [cite: 11]
+    // Teste 1: Verificar se a rota /status retorna status 200 e mensagem correta
     test('GET /status deve retornar status 200 e mensagem de online', async () => {
         const response = await request(app).get('/status');
         expect(response.statusCode).toBe(200);
         expect(response.body).toEqual({ status: 'API de Gestão de Estoque está online!' });
     });
 
-    // Teste 2: Verificar se a rota /produtos_estoque retorna dados e pelo menos 10 registros [cite: 11]
+    // Teste 2: Verificar se a rota /produtos_estoque retorna dados e pelo menos 10 registros
     test('GET /produtos_estoque deve retornar uma lista de produtos com pelo menos 10 itens', async () => {
         const response = await request(app).get('/produtos_estoque');
         expect(response.statusCode).toBe(200);
@@ -27,7 +27,7 @@ describe('API de Gestão de Estoque', () => {
         }
     });
 
-    // Teste 3 (Adicional): Verificar se os dados carregados têm as propriedades esperadas
+    // Teste 3: Verificar se os dados carregados têm as propriedades esperadas
     test('Cada produto em /produtos_estoque deve ter as propriedades essenciais', async () => {
         const response = await request(app).get('/produtos_estoque');
         expect(response.statusCode).toBe(200);

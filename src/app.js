@@ -4,7 +4,7 @@ const path = require('path');
 const fs = require('fs');
 
 const app = express();
-const PORT = process.env.PORT || 3000; // A porta da API é um requisito importante para o Security Group na Etapa 3.
+const PORT = process.env.PORT || 3000;
 
 // Função para carregar os dados do JSON
 const loadStockData = () => {
@@ -18,12 +18,12 @@ const loadStockData = () => {
     }
 };
 
-// Rota GET /status [cite: 7]
+// Rota GET /status 
 app.get('/status', (req, res) => {
     res.status(200).json({ status: 'API de Gestão de Estoque está online!' });
 });
 
-// Rota GET /produtos_estoque [cite: 8]
+// Rota GET /produtos_estoque 
 app.get('/produtos_estoque', (req, res) => {
     const data = loadStockData();
     res.status(200).json(data);
