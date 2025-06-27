@@ -1,0 +1,10 @@
+# .gitignore
+
+# Node.js
+node_modules/
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+.terraform.lock.hcl # Arquivo de lock do Terraform
