@@ -1,0 +1,92 @@
+[
+    {
+      "id_produto": "SKU00123",
+      "nome": "Monitor LED 24 polegadas",
+      "quantidade_disponivel": 35,
+      "localizacao_armazem": "Corredor A, Prateleira 3",
+      "preco_custo": 350.00,
+      "preco_venda": 599.90,
+      "fornecedor": "TechDistribuidora Ltda."
+    },
+    {
+      "id_produto": "SKU00456",
+      "nome": "Teclado Mecânico Gamer RGB",
+      "quantidade_disponivel": 15,
+      "localizacao_armazem": "Corredor B, Prateleira 1",
+      "preco_custo": 180.00,
+      "preco_venda": 349.90,
+      "fornecedor": "HardParts Inc."
+    },
+    {
+      "id_produto": "SKU00789",
+      "nome": "Mouse Sem Fio Ergonômico",
+      "quantidade_disponivel": 50,
+      "localizacao_armazem": "Corredor A, Prateleira 2",
+      "preco_custo": 50.00,
+      "preco_venda": 99.90,
+      "fornecedor": "Acessórios Essenciais Ltda."
+    },
+    {
+      "id_produto": "SKU01011",
+      "nome": "Webcam Full HD 1080p",
+      "quantidade_disponivel": 20,
+      "localizacao_armazem": "Corredor C, Prateleira 4",
+      "preco_custo": 120.00,
+      "preco_venda": 229.90,
+      "fornecedor": "Visão Clara S.A."
+    },
+    {
+      "id_produto": "SKU01213",
+      "nome": "Fone de Ouvido Bluetooth",
+      "quantidade_disponivel": 40,
+      "localizacao_armazem": "Corredor B, Prateleira 2",
+      "preco_custo": 80.00,
+      "preco_venda": 169.90,
+      "fornecedor": "Som Perfeito Ind."
+    },
+    {
+      "id_produto": "SKU01415",
+      "nome": "Impressora Multifuncional",
+      "quantidade_disponivel": 10,
+      "localizacao_armazem": "Corredor D, Prateleira 1",
+      "preco_custo": 400.00,
+      "preco_venda": 799.90,
+      "fornecedor": "PrintMaster Ltda."
+    },
+    {
+      "id_produto": "SKU01617",
+      "nome": "HD Externo 1TB",
+      "quantidade_disponivel": 25,
+      "localizacao_armazem": "Corredor A, Prateleira 1",
+      "preco_custo": 200.00,
+      "preco_venda": 389.90,
+      "fornecedor": "Armazenamento Seguro S.A."
+    },
+    {
+      "id_produto": "SKU01819",
+      "nome": "Roteador Wi-Fi Dual Band",
+      "quantidade_disponivel": 18,
+      "localizacao_armazem": "Corredor C, Prateleira 2",
+      "preco_custo": 150.00,
+      "preco_venda": 299.90,
+      "fornecedor": "Conecta Tudo Ltda."
+    },
+    {
+      "id_produto": "SKU02021",
+      "nome": "Cadeira Gamer Ergonômica",
+      "quantidade_disponivel": 7,
+      "localizacao_armazem": "Corredor D, Prateleira 3",
+      "preco_custo": 600.00,
+      "preco_venda": 1199.90,
+      "fornecedor": "Conforto Maximo Inc."
+    },
+    {
+      "id_produto": "SKU02223",
+      "nome": "Placa de Vídeo RTX 3060",
+      "quantidade_disponivel": 5,
+      "localizacao_armazem": "Corredor B, Prateleira 5",
+      "preco_custo": 1800.00,
+      "preco_venda": 3499.90,
+      "fornecedor": "Ultra Performance G.S."
+    }
+  ]
