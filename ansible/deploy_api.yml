@@ -1,7 +1,83 @@
-# ansible/hosts.yml
-all:
-  hosts:
-    api_server:
-      ansible_host: 54.86.129.40  # SUBSTITUA PELO IP PÚBLICO DA SUA EC2!
-      ansible_user: ubuntu                 # Usuário padrão para AMIs Ubuntu
-      ansible_ssh_private_key_file: ~/.ssh/api-estoque-key # Caminho para sua chave privada SSH
+# ansible/deploy_api.yml
+---
+- name: Deploy da API de Gestão de Estoque
+  hosts: api_server
+  become: yes # Permite que o Ansible execute comandos com privilégios de sudo
+  vars:
+    repo_url: "https://github.com/Nicolas-klaumann/api-estoque.git" # URL HTTPS do seu repositório
+    app_dir: "/home/ubuntu/api-estoque" # Diretório onde o projeto será clonado/implantado
+    node_version: "18" # Versão do Node.js a ser instalada
+    api_port: 3000 # Porta da sua API Node.js
+
+  tasks:
+    - name: Atualizar pacotes do apt
+      apt:
+        update_cache: yes
+        force_apt_get: yes
+        cache_valid_time: 3600 # Cache válido por 1 hora
+
+    - name: Instalar dependências (curl, git)
+      apt:
+        name:
+          - curl
+          - git
+        state: present
+
+    # NOVA TAREFA: Remove instalações NVM anteriores para garantir uma instalação limpa
+    - name: Remover instalações NVM anteriores (para garantir instalação limpa)
+      ansible.builtin.file:
+        path: "/home/ubuntu/.nvm"
+        state: absent
+      become_user: ubuntu
+
+    - name: Instalar Node.js e npm usando NVM (Node Version Manager)
+      shell: |
+        export NVM_DIR="$HOME/.nvm" # Adicionado: Garante que NVM_DIR esteja definido
+        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+        source "$NVM_DIR/nvm.sh" # Usar "$NVM_DIR/nvm.sh" é mais robusto
+        nvm install {{ node_version }}
+        nvm use {{ node_version }}
+        npm install -g npm@latest
+        npm install -g pm2 # pm2 para gerenciar processos Node.js em produção
+      args:
+        executable: /bin/bash # Garante que o shell seja bash para carregar nvm
+      # REMOVIDO: creates: "/home/ubuntu/.nvm/nvm.sh" para garantir que sempre tente reinstalar
+      become_user: ubuntu
+
+    - name: Configurar PATH para NVM no .bashrc (para sessões futuras e scripts)
+      lineinfile:
+        path: "/home/ubuntu/.bashrc"
+        line: 'export NVM_DIR="$HOME/.nvm"\n[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"\n[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"'
+        insertafter: EOF # Adiciona no final do arquivo
+      become_user: ubuntu
+
+    - name: Clonar o repositório da API (ou atualizar se já existir)
+      git:
+        repo: "{{ repo_url }}"
+        dest: "{{ app_dir }}"
+        version: main # Nome da sua branch principal (geralmente main ou master)
+        force: yes # Garante que o repositório seja atualizado para o estado mais recente
+      become_user: ubuntu # Executa esta tarefa como o usuário ubuntu (não root)
+
+    - name: Instalar dependências do projeto Node.js
+      shell: |
+        export NVM_DIR="$HOME/.nvm" # Adicionado: Garante que NVM_DIR esteja definido
+        source "$NVM_DIR/nvm.sh" # Usar "$NVM_DIR/nvm.sh" é mais robusto
+        nvm use {{ node_version }}
+        npm install
+      args:
+        chdir: "{{ app_dir }}" # Garante que o comando seja executado no diretório da sua aplicação
+        executable: /bin/bash # Garante que o shell seja bash para carregar nvm
+      become_user: ubuntu
+
+    - name: Iniciar ou reiniciar a aplicação com PM2
+      shell: |
+        export NVM_DIR="$HOME/.nvm" # Adicionado: Garante que NVM_DIR esteja definido
+        source "$NVM_DIR/nvm.sh" # Usar "$NVM_DIR/nvm.sh" é mais robusto
+        nvm use {{ node_version }}
+        cd {{ app_dir }}
+        pm2 startOrRestart ecosystem.config.js --env production
+      args:
+        executable: /bin/bash
+        chdir: "{{ app_dir }}"
+      become_user: ubuntu
